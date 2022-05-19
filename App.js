@@ -1,11 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+
+import Cep from './components/Cep';
+import api from './components/Api';
 
 export default function App() {
+	const [cep, setCep] = useState(0);
+	const [inputCep, setInputCep] = useState(0);
+	
+	async function carregaCep(){
+		const response = await Api.get('ws/'+inputCep+'/json/');
+		setCep(response.data);
+	};
+	
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+		  
+      <View styles={styles.bloco}>
+		  <Text style={styles.texto}>Informe seu CEP</Text>
+		  <TextInput style={styles.input}
+		  placeholder="Ex.: 1174000"
+		  onChangeText={(data)=>setInputCep(data)}	  
+			  />
+		  
+		  <TouchableOpacity style={styles.botao}
+			  onPress={carregaCep}
+			  >
+		  	<Text style={styles.textoBotao}>Buscar</Text>
+		  </TouchableOpacity>
+	  </View>
+		  <View>
+		  	<Cep data={cep}/>
+		  </View>
+		  
+      
     </View>
   );
 }
@@ -17,4 +45,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+	
+  texto:{
+	fontSize: 20,
+  },
+	bloco:{
+	width: "100%",
+	
+},
+	input:{
+		width: "80%",
+		marginLeft: "10%",
+		borderBottomWidth: 2,
+		borderColor: 'gray',
+		borderRadius: 6,
+		
+	},
+	botao:{
+	width: '80%',
+		marginLeft: '10%',
+},
+	textoBotao:{
+		width: '80%',
+		marginLeft: '10%',
+	}
+		
 });
