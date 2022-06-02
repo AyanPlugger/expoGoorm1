@@ -9,7 +9,7 @@ export default function App() {
 	const [inputCep, setInputCep] = useState(0);
 	
 	async function carregaCep(){
-		const response = await Api.get('ws/'+inputCep+'/json/');
+		const response = await api.get('ws/'+inputCep+'/json/');
 		setCep(response.data);
 	};
 	
@@ -28,7 +28,7 @@ export default function App() {
 			  >
 		  	<Text style={styles.textoBotao}>Buscar</Text>
 		  </TouchableOpacity>
-	  </View>
+	    </View>
 		  <View>
 		  	<Cep data={cep}/>
 		  </View>
